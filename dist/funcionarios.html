@@ -1,103 +1,401 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <!-- AdminLTE -->
   <link rel="stylesheet" href="./css/adminlte.css">
+  <link rel="stylesheet" href="./css/custom.css">
 
   <title>Funcionários</title>
+
+  <style>
+
+    body {
+      background-color: #f4f6f9;
+    }
+
+    /* Centralização */
+    .form-container {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    /* Card */
+    .custom-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+
+    /* Cabeçalho */
+    .card-header {
+      background: #3a5a40;
+      color: white;
+      padding: 15px 20px;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    /* Corpo */
+    .card-body {
+      padding: 30px;
+    }
+
+    /* Labels */
+    .form-label {
+      font-weight: 600;
+      color: #3a5a40;
+      margin-bottom: 8px;
+    }
+
+    /* Inputs */
+    .form-control {
+      padding: 10px 14px;
+      border-radius: 8px;
+    }
+
+    /* Espaçamento */
+    .mb-3 {
+      margin-bottom: 22px !important;
+    }
+
+    /* Botão salvar */
+    .btn-primary {
+      background-color: #3a5a40;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+    }
+
+    .btn-primary:hover {
+      background-color: #588157;
+    }
+
+    /* Botão voltar */
+    .btn-voltar {
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    /* Alertas */
+    #msgFuncionario {
+      margin-bottom: 20px;
+    }
+
+  </style>
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
 
-<div class="app-wrapper">
+  <div class="app-wrapper">
 
-<main class="app-main">
+    <main class="app-main">
 
-<!-- TÍTULO -->
-<div class="app-content-header p-3">
-  <h3>Funcionários</h3>
-</div>
+      <!-- CONTEÚDO -->
+      <div class="app-content">
 
-<!-- CONTEÚDO -->
-<div class="app-content">
-<div class="container-fluid">
+        <div class="form-container">
 
-<div class="card card-primary">
-  <div class="card-header">
-    <h3 class="card-title">Cadastro de Funcionários</h3>
-  </div>
+          <!-- BOTÃO VOLTAR -->
+          <div class="text-start mb-3">
 
-  <div class="card-body">
+            <a href="index.html"
+              class="btn btn-outline-success btn-voltar shadow-sm">
 
-    <!-- MENSAGEM -->
-    <div id="msgFuncionario"></div>
+              <i class="bi bi-arrow-left"></i>
 
-    <!-- FORM -->
-    <form onsubmit="salvarFuncionario(event)">
+            </a>
 
-      <div class="row">
-        
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Nome</label>
-          <input id="nome" class="form-control">
+          </div>
+
+          <!-- CARD -->
+          <div class="custom-card mx-auto">
+
+            <div class="card-header">
+
+              <h3 class="card-title">
+                Cadastro de Funcionários
+              </h3>
+
+            </div>
+
+            <div class="card-body">
+
+              <!-- MENSAGEM -->
+              <div id="msgFuncionario"></div>
+
+              <!-- FORM -->
+              <form onsubmit="salvarFuncionario(event)">
+
+                <!-- Nome -->
+                <div class="mb-3">
+
+                  <label class="form-label">
+                    Nome
+                  </label>
+
+                  <input
+                    id="nome"
+                    class="form-control">
+
+                </div>
+
+                <!-- Cargo -->
+                <div class="mb-3">
+
+                  <label class="form-label">
+                    Cargo
+                  </label>
+
+                  <input
+                    id="cargo"
+                    class="form-control">
+
+                </div>
+
+                <!-- Carga Horária -->
+                <div class="mb-3">
+
+                  <label class="form-label">
+                    Carga Horária
+                  </label>
+
+                  <input
+                    id="cargaHoraria"
+                    class="form-control">
+
+                </div>
+
+                <!-- Salário -->
+                <div class="mb-3">
+
+                  <label class="form-label">
+                    Salário
+                  </label>
+
+                  <input
+                    id="salario"
+                    type="number"
+                    class="form-control">
+
+                </div>
+
+                <!-- Contato -->
+                <div class="mb-3">
+
+                  <label class="form-label">
+                    Contato
+                  </label>
+
+                  <input
+                    id="telefone"
+                    class="form-control">
+
+                </div>
+
+                <!-- BOTÃO -->
+                <button class="btn btn-primary">
+
+                  <i class="bi bi-save"></i>
+                  Salvar
+
+                </button>
+
+              </form>
+
+              <!-- TABELA -->
+              <div class="mt-4">
+
+                <table class="table table-striped table-bordered">
+
+                  <thead class="table-success">
+
+                    <tr>
+                      <th>Nome</th>
+                      <th>Cargo</th>
+                      <th>Carga Horária</th>
+                      <th>Salário</th>
+                      <th>Data Cadastro</th>
+                      <th>Ações</th>
+                    </tr>
+
+                  </thead>
+
+                  <tbody id="listaFuncionarios">
+
+                    <!-- EMPTY STATE -->
+                    <tr id="linhaVazia">
+
+                      <td colspan="6"
+                        class="text-center text-muted">
+
+                        Nenhum funcionário cadastrado
+
+                      </td>
+
+                    </tr>
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+            </div>
+          </div>
         </div>
-
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Cargo</label>
-          <input id="cargo" class="form-control">
-        </div>
-
-        <div class="col-md-4 mb-3">
-          <label class="form-label">Contato</label>
-          <input id="telefone" class="form-control">
-        </div>
-
       </div>
 
-      <button class="btn btn-primary">Salvar</button>
-
-    </form>
-
+    </main>
   </div>
-</div>
 
-</div>
-</div>
+  <!-- SCRIPT -->
+  <script>
 
-</main>
-</div>
+    function salvarFuncionario(event) {
 
-<!-- JS -->
-<script>
-function salvarFuncionario(event) {
-  event.preventDefault();
+      event.preventDefault();
 
-  const nome = document.getElementById("nome").value;
-  const cargo = document.getElementById("cargo").value;
-  const telefone = document.getElementById("telefone").value;
+      const nome = document.getElementById("nome").value;
+      const cargo = document.getElementById("cargo").value;
+      const cargaHoraria = document.getElementById("cargaHoraria").value;
+      const salario = document.getElementById("salario").value;
+      const telefone = document.getElementById("telefone").value;
 
-  const msg = document.getElementById("msgFuncionario");
+      const msg = document.getElementById("msgFuncionario");
+      const lista = document.getElementById("listaFuncionarios");
+      const linhaVazia = document.getElementById("linhaVazia");
 
-  if (!nome || !cargo || !telefone) {
-    msg.innerHTML = "<div class='alert alert-danger'>Preencha todos os campos</div>";
-    return;
-  }
+      // Limpa mensagens anteriores
+      msg.innerHTML = "";
 
-  msg.innerHTML = "<div class='alert alert-success'>Funcionário cadastrado com sucesso!</div>";
-}
-</script>
+      // VALIDAÇÃO
+      if (!nome || !cargo || !cargaHoraria || !salario || !telefone) {
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
-<script src="./js/adminlte.js"></script>
+        msg.innerHTML = `
+          <div class='alert alert-danger'>
+            <i class="bi bi-exclamation-triangle-fill"></i>
+            Preencha todos os campos
+          </div>
+        `;
+
+        setTimeout(() => {
+          msg.innerHTML = "";
+        }, 3000);
+
+        return;
+      }
+
+      // Remove linha vazia
+      if (linhaVazia) {
+        linhaVazia.remove();
+      }
+
+      // SUCESSO
+      msg.innerHTML = `
+        <div class='alert alert-success'>
+          <i class="bi bi-check-circle-fill"></i>
+          Funcionário cadastrado com sucesso!
+        </div>
+      `;
+
+      setTimeout(() => {
+        msg.innerHTML = "";
+      }, 3000);
+
+      // Nova linha
+      const novaLinha = `
+        <tr>
+
+          <td>${nome}</td>
+
+          <td>${cargo}</td>
+
+          <td>${cargaHoraria}</td>
+
+          <td>
+            R$ ${parseFloat(salario).toFixed(2)}
+          </td>
+
+          <td>
+            ${new Date().toLocaleDateString()}
+          </td>
+
+          <td>
+
+            <button
+              class="btn btn-sm btn-danger"
+              onclick="excluirFuncionario(this)">
+
+              <i class="bi bi-trash"></i>
+
+            </button>
+
+          </td>
+
+        </tr>
+      `;
+
+      lista.innerHTML += novaLinha;
+
+      // Limpa formulário
+      document.querySelector("form").reset();
+    }
+
+    // EXCLUIR FUNCIONÁRIO
+    function excluirFuncionario(botao) {
+
+      botao.closest("tr").remove();
+
+      const lista = document.getElementById("listaFuncionarios");
+
+      // Se tabela ficar vazia
+      if (lista.children.length === 0) {
+
+        lista.innerHTML = `
+          <tr id="linhaVazia">
+
+            <td colspan="6"
+              class="text-center text-muted">
+
+              Nenhum funcionário cadastrado
+
+            </td>
+
+          </tr>
+        `;
+      }
+    }
+
+  </script>
+
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
+
+  <!-- AdminLTE -->
+  <script src="./js/adminlte.js"></script>
 
 </body>
+
 </html>

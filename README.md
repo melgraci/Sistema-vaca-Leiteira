@@ -69,6 +69,20 @@ Auxiliar no controle básico da produção leiteira, permitindo:
 
 ---
 
+## Atualizações recentes
+
+- Adicionada tela de relatórios
+- Adicionada tela de configurações
+- Implementado Design System
+- Melhorias visuais nos formulários
+- Adicionados estados de feedback:
+  - sucesso
+  - erro
+  - loading
+  - validação
+  - empty state
+- Melhorias de acessibilidade
+
 ## Estrutura do Sistema (Sitemap)
 
 ```

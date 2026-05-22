@@ -1,107 +1,295 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <!-- AdminLTE -->
   <link rel="stylesheet" href="./css/adminlte.css">
+  <link rel="stylesheet" href="./css/custom.css">
 
   <title>Produção</title>
+
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
 
 <div class="app-wrapper">
 
-  <!-- NAVBAR -->
-  <div class="app-content-header"></div>
-    <div class="container-fluid">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-lte-toggle="sidebar" href="#">
-            <i class="bi bi-list"></i>
-          </a>
-        </li>
-      </ul>
+<main class="app-main">
+
+<!-- CONTEÚDO -->
+<div class="app-content">
+
+<div class="form-container">
+
+  <!-- BOTÃO VOLTAR -->
+  <div class="text-start mb-3">
+
+    <a href="index.html"
+      class="btn btn-outline-success btn-voltar shadow-sm">
+
+      <i class="bi bi-arrow-left"></i>
+
+    </a>
+
+  </div>
+
+  <!-- CARD -->
+  <div class="custom-card">
+
+    <!-- HEADER -->
+    <div class="card-header">
+
+      <h3 class="card-title">
+        Cadastro da Produção de Leite
+      </h3>
+
     </div>
-  </nav>
 
-    <div class="app-content-header">
-      <div class="container-fluid">
-        
-      </div>
-    </div>
+    <!-- BODY -->
+    <div class="card-body">
 
-    <!-- CONTENT -->
-    <div class="app-content">
-      <div class="container-fluid">
+      <!-- ALERTAS -->
+      <div id="msgProducao"></div>
 
-        <div class="card card-success">
-          <div class="card-header">
-            <h3 class="card-title">Cadastro da Produção de leite</h3>
-          </div>
+      <!-- FORM -->
+      <form onsubmit="salvarProducao(event)">
 
-          <div class="card-body">
-            <div id="msgProducao"></div>
-            <form onsubmit="salvarProducao(event)">
+        <!-- DATA -->
+        <div class="mb-3">
 
-              <div class="mb-3">
-                <label class="form-label">Data</label>
-                <input type="date" class="form-control">
-              </div>
+          <label class="form-label">
+            Data
+          </label>
 
-              <div class="mb-3">
-                <label class="form-label">Quantidade (litros)</label>
-                <input type="number" class="form-control">
-              </div>
-
-              <div class="mb-3">
-                <label class="form-label">Nome do animal</label>
-                <input type="text" class="form-control">
-              </div>
-
-              <button type="submit" class="btn btn-success">Salvar</button>
-              <button type="reset" class="btn btn-secondary">Cancelar</button>
-
-            </form>
-          </div>
+          <input
+            id="data"
+            type="date"
+            class="form-control">
 
         </div>
 
-      </div>
-    </div>
-    <script>
-function salvarProducao(event) {
-  event.preventDefault(); // 🔥 impede recarregar a página
+        <!-- LITROS -->
+        <div class="mb-3">
 
-  const data = document.querySelector("input[type='date']").value;
-  const litros = document.querySelector("input[type='number']").value;
-  const animal = document.querySelector("input[type='text']").value;
+          <label class="form-label">
+            Quantidade (litros)
+          </label>
+
+          <input
+            id="litros"
+            type="number"
+            class="form-control">
+
+        </div>
+
+        <!-- ANIMAL -->
+        <div class="mb-3">
+
+          <label class="form-label">
+            Nome do animal
+          </label>
+
+          <input
+            id="animal"
+            type="text"
+            class="form-control">
+
+        </div>
+
+        <!-- BOTÕES -->
+        <button type="submit"
+          class="btn btn-primary">
+
+          <i class="bi bi-save"></i>
+          Salvar
+
+        </button>
+
+        <button type="reset"
+          class="btn btn-secondary">
+
+          Cancelar
+
+        </button>
+
+      </form>
+
+      <!-- TABELA -->
+      <div class="mt-4">
+
+        <table class="table table-striped table-bordered">
+
+          <thead class="table-success">
+
+            <tr>
+
+              <th>Data</th>
+              <th>Quantidade</th>
+              <th>Animal</th>
+              <th>Ações</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="listaProducao">
+
+            <!-- EMPTY STATE -->
+            <tr id="linhaVazia">
+
+              <td colspan="4"
+                class="text-center text-muted">
+
+                Nenhuma produção cadastrada
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+</main>
+</div>
+
+<!-- SCRIPT -->
+<script>
+
+function salvarProducao(event) {
+
+  event.preventDefault();
+
+  const data = document.getElementById("data").value;
+  const litros = document.getElementById("litros").value;
+  const animal = document.getElementById("animal").value;
 
   const msg = document.getElementById("msgProducao");
+  const lista = document.getElementById("listaProducao");
+  const linhaVazia = document.getElementById("linhaVazia");
 
+  // LIMPA ALERTAS
+  msg.innerHTML = "";
+
+  // VALIDAÇÃO
   if (!data || !litros || !animal) {
-    msg.innerHTML = "<div class='alert alert-danger'>Preencha todos os campos</div>";
+
+    msg.innerHTML = `
+      <div class='alert alert-danger mt-3'>
+
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        Preencha todos os campos
+
+      </div>
+    `;
+
+    setTimeout(() => {
+      msg.innerHTML = "";
+    }, 3000);
+
     return;
   }
 
-  msg.innerHTML = "<div class='alert alert-success'>Produção salva com sucesso!</div>";
+  // REMOVE EMPTY
+  if (linhaVazia) {
+    linhaVazia.remove();
+  }
+
+  // SUCESSO
+  msg.innerHTML = `
+    <div class='alert alert-success mt-3'>
+
+      <i class="bi bi-check-circle-fill"></i>
+      Produção cadastrada com sucesso!
+
+    </div>
+  `;
+
+  setTimeout(() => {
+    msg.innerHTML = "";
+  }, 3000);
+
+  // NOVA LINHA
+  const novaLinha = `
+    <tr>
+
+      <td>${data}</td>
+
+      <td>${litros} L</td>
+
+      <td>${animal}</td>
+
+      <td>
+
+        <button
+          class="btn btn-sm btn-danger"
+          onclick="excluirProducao(this)">
+
+          <i class="bi bi-trash"></i>
+
+        </button>
+
+      </td>
+
+    </tr>
+  `;
+
+  lista.innerHTML += novaLinha;
+
+  // LIMPA FORM
+  document.querySelector("form").reset();
 }
+
+// EXCLUIR
+function excluirProducao(botao) {
+
+  botao.closest("tr").remove();
+
+  const lista = document.getElementById("listaProducao");
+
+  // SE FICAR VAZIO
+  if (lista.children.length === 0) {
+
+    lista.innerHTML = `
+      <tr id="linhaVazia">
+
+        <td colspan="4"
+          class="text-center text-muted">
+
+          Nenhuma produção cadastrada
+
+        </td>
+
+      </tr>
+    `;
+  }
+}
+
 </script>
 
-  </main>
-
-  
-  
-
+<!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
+
+<!-- AdminLTE -->
 <script src="./js/adminlte.js"></script>
 
 </body>

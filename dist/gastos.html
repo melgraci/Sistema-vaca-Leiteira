@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Bootstrap -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
 
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
   <!-- AdminLTE -->
   <link rel="stylesheet" href="./css/adminlte.css">
+  <link rel="stylesheet" href="./css/custom.css">
 
-  <title>Gastos</title>
+  <title>Controle de Gastos</title>
+
 </head>
 
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -22,59 +27,158 @@
 
 <main class="app-main">
 
-<!-- TÍTULO -->
-<div class="app-content-header p-3">
-  <h3>Gastos</h3>
-</div>
-
 <!-- CONTEÚDO -->
 <div class="app-content">
-<div class="container-fluid">
 
-<div class="card card-danger">
-  <div class="card-header">
-    <h3 class="card-title">Cadastro de Gastos</h3>
+<div class="form-container">
+
+  <!-- BOTÃO VOLTAR -->
+  <div class="text-start mb-3">
+
+    <a href="index.html"
+      class="btn btn-outline-success btn-voltar shadow-sm">
+
+      <i class="bi bi-arrow-left"></i>
+
+    </a>
+
   </div>
 
-  <div class="card-body">
+  <!-- CARD -->
+  <div class="custom-card">
 
-    <!-- MENSAGEM -->
-    <div id="msgGasto"></div>
+    <!-- HEADER -->
+    <div class="card-header">
 
-    <!-- FORM -->
-    <form onsubmit="salvarGasto(event)">
+      <h3 class="card-title">
+        Cadastro de Gastos
+      </h3>
 
-      <div class="row">
+    </div>
 
-        <div class="col-md-3 mb-3">
-          <label class="form-label">Data</label>
-          <input id="data" type="date" class="form-control">
+    <!-- BODY -->
+    <div class="card-body">
+
+      <!-- ALERTAS -->
+      <div id="msgGasto"></div>
+
+      <!-- FORM -->
+      <form onsubmit="salvarGasto(event)">
+
+        <!-- DATA -->
+        <div class="mb-3">
+
+          <label class="form-label">
+            Data
+          </label>
+
+          <input
+            id="data"
+            type="date"
+            class="form-control">
+
         </div>
 
-        <div class="col-md-3 mb-3">
-          <label class="form-label">Valor (R$)</label>
-          <input id="valor" type="number" class="form-control">
+        <!-- VALOR -->
+        <div class="mb-3">
+
+          <label class="form-label">
+            Valor (R$)
+          </label>
+
+          <input
+            id="valor"
+            type="number"
+            class="form-control">
+
         </div>
 
-        <div class="col-md-3 mb-3">
-          <label class="form-label">Categoria</label>
-          <input id="categoria" type="text" class="form-control">
+        <!-- CATEGORIA -->
+        <div class="mb-3">
+
+          <label class="form-label">
+            Categoria
+          </label>
+
+          <input
+            id="categoria"
+            type="text"
+            class="form-control">
+
         </div>
 
-        <div class="col-md-3 mb-3">
-          <label class="form-label">Descrição</label>
-          <input id="descricao" type="text" class="form-control">
+        <!-- DESCRIÇÃO -->
+        <div class="mb-3">
+
+          <label class="form-label">
+            Descrição
+          </label>
+
+          <input
+            id="descricao"
+            type="text"
+            class="form-control">
+
         </div>
+
+        <!-- BOTÕES -->
+        <button class="btn btn-primary">
+
+          <i class="bi bi-save"></i>
+          Salvar
+
+        </button>
+
+        <button type="reset"
+          class="btn btn-secondary">
+
+          Cancelar
+
+        </button>
+
+      </form>
+
+      <!-- TABELA -->
+      <div class="mt-4">
+
+        <table class="table table-striped table-bordered">
+
+          <thead class="table-success">
+
+            <tr>
+
+              <th>Data</th>
+              <th>Valor</th>
+              <th>Categoria</th>
+              <th>Descrição</th>
+              <th>Ações</th>
+
+            </tr>
+
+          </thead>
+
+          <tbody id="listaGastos">
+
+            <!-- EMPTY STATE -->
+            <tr id="linhaVazia">
+
+              <td colspan="5"
+                class="text-center text-muted">
+
+                Nenhum gasto cadastrado
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
 
       </div>
 
-      <button class="btn btn-danger">Salvar</button>
-      <button type="reset" class="btn btn-secondary">Cancelar</button>
-
-    </form>
-
+    </div>
   </div>
-</div>
 
 </div>
 </div>
@@ -82,9 +186,11 @@
 </main>
 </div>
 
-<!-- JS -->
+<!-- SCRIPT -->
 <script>
+
 function salvarGasto(event) {
+
   event.preventDefault();
 
   const data = document.getElementById("data").value;
@@ -93,17 +199,116 @@ function salvarGasto(event) {
   const descricao = document.getElementById("descricao").value;
 
   const msg = document.getElementById("msgGasto");
+  const lista = document.getElementById("listaGastos");
+  const linhaVazia = document.getElementById("linhaVazia");
 
+  // LIMPA ALERTAS
+  msg.innerHTML = "";
+
+  // VALIDAÇÃO
   if (!data || !valor || !categoria || !descricao) {
-    msg.innerHTML = "<div class='alert alert-danger'>Preencha todos os campos</div>";
+
+    msg.innerHTML = `
+      <div class='alert alert-danger mt-3'>
+
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        Preencha todos os campos
+
+      </div>
+    `;
+
+    setTimeout(() => {
+      msg.innerHTML = "";
+    }, 3000);
+
     return;
   }
 
-  msg.innerHTML = "<div class='alert alert-success'>Gasto cadastrado com sucesso!</div>";
+  // REMOVE EMPTY STATE
+  if (linhaVazia) {
+    linhaVazia.remove();
+  }
+
+  // SUCESSO
+  msg.innerHTML = `
+    <div class='alert alert-success mt-3'>
+
+      <i class="bi bi-check-circle-fill"></i>
+      Gasto cadastrado com sucesso!
+
+    </div>
+  `;
+
+  setTimeout(() => {
+    msg.innerHTML = "";
+  }, 3000);
+
+  // NOVA LINHA
+  const novaLinha = `
+    <tr>
+
+      <td>${data}</td>
+
+      <td>
+        R$ ${parseFloat(valor).toFixed(2)}
+      </td>
+
+      <td>${categoria}</td>
+
+      <td>${descricao}</td>
+
+      <td>
+
+        <button
+          class="btn btn-sm btn-danger"
+          onclick="excluirGasto(this)">
+
+          <i class="bi bi-trash"></i>
+
+        </button>
+
+      </td>
+
+    </tr>
+  `;
+
+  lista.innerHTML += novaLinha;
+
+  // LIMPA FORM
+  document.querySelector("form").reset();
 }
+
+// EXCLUIR
+function excluirGasto(botao) {
+
+  botao.closest("tr").remove();
+
+  const lista = document.getElementById("listaGastos");
+
+  // SE FICAR VAZIO
+  if (lista.children.length === 0) {
+
+    lista.innerHTML = `
+      <tr id="linhaVazia">
+
+        <td colspan="5"
+          class="text-center text-muted">
+
+          Nenhum gasto cadastrado
+
+        </td>
+
+      </tr>
+    `;
+  }
+}
+
 </script>
 
+<!-- Bootstrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
+
+<!-- AdminLTE -->
 <script src="./js/adminlte.js"></script>
 
 </body>
